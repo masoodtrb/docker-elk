@@ -46,8 +46,10 @@ services:
       - 9200:9200
       - 9300:9300
     environment:
+      ES_JAVA_OPTS: -Xm1g -Xms1g
+      cluster.name: kilid-cluster
+      xpack.license.self_generated.type: basic
       node.name: elasticsearch
-      ES_JAVA_OPTS: -Xms512m -Xmx512m
       # Bootstrap password.
       # Used to initialize the keystore during the initial startup of
       # Elasticsearch. Ignored on subsequent runs.
@@ -73,7 +75,7 @@ services:
       - 50000:50000/udp
       - 9600:9600
     environment:
-      LS_JAVA_OPTS: -Xms256m -Xmx256m
+      LS_JAVA_OPTS: -Xm1g -Xms1g
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
     networks:
       - elk
@@ -91,6 +93,7 @@ services:
     ports:
       - 5601:5601
     environment:
+      SERVER_NAME: elk.kilid.org
       KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
     networks:
       - elk
